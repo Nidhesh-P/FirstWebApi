@@ -6,8 +6,10 @@ using System.Web.Mvc;
 
 namespace FirstWebApi.Controllers
 {
+    [RoutePrefix("HelpPage")]
     public class HomeController : Controller
     {
+        [Route("FirstPage")]
         public ActionResult Index()
         {
             ViewBag.Title = "Home Page";
