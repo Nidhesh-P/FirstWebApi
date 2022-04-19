@@ -51,7 +51,7 @@ namespace FirstWebApi.Controllers
         //}
 
         [HttpPatch]
-        public void UpdateProvider([FromUri]Provider P)
+        public void UpdateProvider([FromBody]Provider P)
         {
             Provider.UpdateProvider(P);
         }
