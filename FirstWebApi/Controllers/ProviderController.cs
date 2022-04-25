@@ -13,13 +13,14 @@ namespace FirstWebApi.Controllers
 {
     public class ProviderController : ApiController
     {
+        [Authorize(Users ="admin")]
         public List<Provider> GetProviders()
         {
             return  Provider.GetProviderData(); 
         }
 
 
-
+        [Authorize]
         public Provider GetProviderById(int id)
         {
             return Provider.GetProviderDataByProviderId(id);

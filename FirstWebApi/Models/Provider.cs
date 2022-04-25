@@ -4,6 +4,8 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using FirstWebApi.DataObject;
+
 
 namespace FirstWebApi.Models
 {
@@ -16,29 +18,39 @@ namespace FirstWebApi.Models
         public string City { get; set; }
         public String State { get; set; }
 
-        private static string connectionString = @"Data Source=LAPTOP-HKBN8ODT\NIDHESH;Initial Catalog=ProductDatabase;User ID=mvcdev;Password=testing2";
+        private static string connectionString = @"Data Source=DESKTOP-9AO2BIN;Initial Catalog=ProductDatabase;User ID=mvcdev;Password=testing2";
 
         public static List<Provider> GetProviderData()
         {
             List<Provider> p = new List<Provider>();
-            SqlConnection conn = new SqlConnection(connectionString);
+            //SqlConnection conn = new SqlConnection(connectionString);
 
-            conn.Open();
-            SqlCommand command = new SqlCommand("select * from Provider", conn);
-            SqlDataAdapter adaptor = new SqlDataAdapter(command);
-            DataSet ds = new DataSet();
+            //conn.Open();
+            //SqlCommand command = new SqlCommand("select * from Provider", conn);
+            //SqlDataAdapter adaptor = new SqlDataAdapter(command);
+            //DataSet ds = new DataSet();
 
 
-            adaptor.Fill(ds);
-            foreach (DataRow data in ds.Tables[0].Rows)
-            {
-                p.Add(new Provider()
-                {
-                    ProviderId = Convert.ToInt32(data[0].ToString()),
-                    ProviderName = data[1].ToString(),
-                    ProviderType = data[2].ToString()
-                });
-            }
+            //adaptor.Fill(ds);
+
+
+            ProductDatabaseEntities entity = new ProductDatabaseEntities();
+            var result = entity.Providers.ToList();
+
+
+
+            //foreach (DataRow data in ds.Tables[0].Rows)
+            //{
+            //    p.Add(new Provider()
+            //    {
+            //        ProviderId = Convert.ToInt32(data[0].ToString()),
+            //        ProviderName = data[1].ToString(),
+            //        ProviderType = data[2].ToString(),
+            //        Address= data["Address"].ToString(),
+            //        City = data["City"].ToString(),
+            //        State = data["State"].ToString(),
+            //    });
+            //}
 
             return p;
         }
@@ -60,7 +72,10 @@ namespace FirstWebApi.Models
                 {
                     ProviderId = Convert.ToInt32(data[0].ToString()),
                     ProviderName = data[1].ToString(),
-                    ProviderType = data[2].ToString()
+                    ProviderType = data[2].ToString(),
+                    Address = data["Address"].ToString(),
+                    City = data["City"].ToString(),
+                    State = data["State"].ToString(),
                 });
             }
 
@@ -71,7 +86,8 @@ namespace FirstWebApi.Models
         {
             SqlConnection conn = new SqlConnection(connectionString);
 
-            string insertCmd = $"insert into Provider (ProviderName, ProviderType) values ('{p.ProviderName}','{p.ProviderType}')";
+            string insertCmd = $"insert into Provider (ProviderName, ProviderType, Address, City, State) values " +
+                $"('{p.ProviderName}','{p.ProviderType}','{p.Address}','{p.City}','{p.State}')";
             conn.Open();
             SqlCommand command = new SqlCommand(insertCmd, conn);
             command.ExecuteNonQuery();
@@ -81,7 +97,8 @@ namespace FirstWebApi.Models
         {
             SqlConnection conn = new SqlConnection(connectionString);
 
-            string insertCmd = $"update provider set providertype='{p.ProviderType}', providername='{p.ProviderName}' where providerid={p.ProviderId}";
+            string insertCmd = $"update provider set providertype='{p.ProviderType}', providername='{p.ProviderName}' " +
+                $", Address='{p.Address}', City='{p.City}', State='{p.State}' where providerid={p.ProviderId}";
             conn.Open();
             SqlCommand command = new SqlCommand(insertCmd, conn);
             command.ExecuteNonQuery();

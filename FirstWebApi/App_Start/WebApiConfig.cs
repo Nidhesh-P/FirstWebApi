@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using FirstWebApi.Handlers;
 
 namespace FirstWebApi
 {
@@ -19,6 +20,8 @@ namespace FirstWebApi
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            GlobalConfiguration.Configuration.MessageHandlers.Add(new ApiSecurityHandler());
         }
     }
 }
