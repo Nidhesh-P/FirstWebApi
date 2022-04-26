@@ -13,10 +13,10 @@ namespace FirstWebApi.DataObject
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class ProductDatabaseEntities : DbContext
+    public partial class ProductDatabaseEntities1 : DbContext
     {
-        public ProductDatabaseEntities()
-            : base("name=ProductDatabaseEntities")
+        public ProductDatabaseEntities1()
+            : base("name=ProductDatabaseEntities1")
         {
         }
     
@@ -26,5 +26,6 @@ namespace FirstWebApi.DataObject
         }
     
         public virtual DbSet<Provider> Providers { get; set; }
+        public virtual DbSet<User> Users { get; set; }
     }
 }

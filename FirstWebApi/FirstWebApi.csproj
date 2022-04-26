@@ -166,22 +166,40 @@
     <Compile Include="Controllers\ProviderController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DataObject\Provider.cs">
-      <DependentUpon>ProviderEntity.tt</DependentUpon>
+      <DependentUpon>UserModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataObject\ProviderEntity.Context.cs">
+    <Compile Include="DataObject\ProviderModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ProviderEntity.Context.tt</DependentUpon>
+      <DependentUpon>ProviderModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataObject\ProviderEntity.cs">
+    <Compile Include="DataObject\ProviderModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ProviderEntity.tt</DependentUpon>
+      <DependentUpon>ProviderModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataObject\ProviderEntity.Designer.cs">
+    <Compile Include="DataObject\ProviderModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ProviderEntity.edmx</DependentUpon>
+      <DependentUpon>ProviderModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DataObject\User.cs">
+      <DependentUpon>UserModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataObject\UserModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataObject\UserModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataObject\UserModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -189,7 +207,7 @@
     <Compile Include="Handlers\ApiSecurityAuthorizeAttribute.cs" />
     <Compile Include="Handlers\ApiSecurityHandler.cs" />
     <Compile Include="Models\Order.cs" />
-    <Compile Include="Models\Provider.cs" />
+    <Compile Include="Models\ProviderModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -199,15 +217,25 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\JS\default.js" />
-    <Content Include="DataObject\ProviderEntity.Context.tt">
+    <Content Include="DataObject\ProviderModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ProviderEntity.Context.cs</LastGenOutput>
-      <DependentUpon>ProviderEntity.edmx</DependentUpon>
+      <DependentUpon>ProviderModel.edmx</DependentUpon>
+      <LastGenOutput>ProviderModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="DataObject\ProviderEntity.tt">
+    <Content Include="DataObject\ProviderModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ProviderEntity.edmx</DependentUpon>
-      <LastGenOutput>ProviderEntity.cs</LastGenOutput>
+      <DependentUpon>ProviderModel.edmx</DependentUpon>
+      <LastGenOutput>ProviderModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="DataObject\UserModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>UserModel.edmx</DependentUpon>
+      <LastGenOutput>UserModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="DataObject\UserModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>UserModel.edmx</DependentUpon>
+      <LastGenOutput>UserModel.cs</LastGenOutput>
     </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -234,12 +262,19 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
-    <EntityDeploy Include="DataObject\ProviderEntity.edmx">
+    <EntityDeploy Include="DataObject\ProviderModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ProviderEntity.Designer.cs</LastGenOutput>
+      <LastGenOutput>ProviderModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="DataObject\ProviderEntity.edmx.diagram">
-      <DependentUpon>ProviderEntity.edmx</DependentUpon>
+    <Content Include="DataObject\ProviderModel.edmx.diagram">
+      <DependentUpon>ProviderModel.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="DataObject\UserModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>UserModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="DataObject\UserModel.edmx.diagram">
+      <DependentUpon>UserModel.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />

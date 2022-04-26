@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using FirstWebApi.Handlers;
 using FirstWebApi.Models;
 using Newtonsoft;
 using Newtonsoft.Json.Linq;
@@ -13,17 +14,17 @@ namespace FirstWebApi.Controllers
 {
     public class ProviderController : ApiController
     {
-        [Authorize(Users ="admin")]
-        public List<Provider> GetProviders()
+        [ApiSecurityAuthorize(Roles ="admin")]
+        public List<ProviderModel> GetProviders()
         {
-            return  Provider.GetProviderData(); 
+            return ProviderModel.GetProviderData(); 
         }
 
 
-        [Authorize]
-        public Provider GetProviderById(int id)
+        [ApiSecurityAuthorize(Roles = "user, admin")]
+        public ProviderModel GetProviderById(int id)
         {
-            return Provider.GetProviderDataByProviderId(id);
+            return ProviderModel.GetProviderDataByProviderId(id);
         }
 
         //[HttpPost]
@@ -36,11 +37,11 @@ namespace FirstWebApi.Controllers
 
 
         [HttpPost]
-        public void AddProvider([FromBody] Provider p)
+        public void AddProvider([FromBody] ProviderModel p)
         {
             //var provider = Newtonsoft.Json.JsonConvert.DeserializeObject<Provider>(p.ToString());
 
-             Provider.InsertProvider(p);
+            ProviderModel.InsertProvider(p);
         }
 
         //[HttpPost]
@@ -52,15 +53,15 @@ namespace FirstWebApi.Controllers
         //}
 
         [HttpPatch]
-        public void UpdateProvider([FromBody]Provider P)
+        public void UpdateProvider([FromBody] ProviderModel P)
         {
-            Provider.UpdateProvider(P);
+            ProviderModel.UpdateProvider(P);
         }
 
         [HttpDelete]
         public void UpdateProvider(int id)
         {
-            Provider.DeleteProvider(id);
+            ProviderModel.DeleteProvider(id);
         }
 
     }

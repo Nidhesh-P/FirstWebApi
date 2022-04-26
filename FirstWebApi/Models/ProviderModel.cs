@@ -9,7 +9,7 @@ using FirstWebApi.DataObject;
 
 namespace FirstWebApi.Models
 {
-    public class Provider
+    public class ProviderModel
     {
         public int ProviderId { get; set; }
         public string ProviderName { get; set; }
@@ -20,9 +20,9 @@ namespace FirstWebApi.Models
 
         private static string connectionString = @"Data Source=DESKTOP-9AO2BIN;Initial Catalog=ProductDatabase;User ID=mvcdev;Password=testing2";
 
-        public static List<Provider> GetProviderData()
+        public static List<ProviderModel> GetProviderData()
         {
-            List<Provider> p = new List<Provider>();
+            List<ProviderModel> p = new List<ProviderModel>();
             //SqlConnection conn = new SqlConnection(connectionString);
 
             //conn.Open();
@@ -34,30 +34,30 @@ namespace FirstWebApi.Models
             //adaptor.Fill(ds);
 
 
-            ProductDatabaseEntities entity = new ProductDatabaseEntities();
+            ProductDatabaseEntities1 entity = new ProductDatabaseEntities1();
             var result = entity.Providers.ToList();
 
 
 
-            //foreach (DataRow data in ds.Tables[0].Rows)
-            //{
-            //    p.Add(new Provider()
-            //    {
-            //        ProviderId = Convert.ToInt32(data[0].ToString()),
-            //        ProviderName = data[1].ToString(),
-            //        ProviderType = data[2].ToString(),
-            //        Address= data["Address"].ToString(),
-            //        City = data["City"].ToString(),
-            //        State = data["State"].ToString(),
-            //    });
-            //}
+            foreach (var data in result)
+            {
+                p.Add(new ProviderModel()
+                {
+                    ProviderId = Convert.ToInt32(data.ProviderId),
+                    ProviderName = data.ProviderName,
+                    ProviderType = data.ProviderType,
+                    Address = data.Address,
+                    City = data.City,
+                    State = data.State,
+                });
+            }
 
             return p;
         }
 
-        public static Provider GetProviderDataByProviderId(int id)
+        public static ProviderModel GetProviderDataByProviderId(int id)
         {
-            List<Provider> p = new List<Provider>();
+            List<ProviderModel> p = new List<ProviderModel>();
             SqlConnection conn = new SqlConnection(connectionString);
 
             conn.Open();
@@ -68,7 +68,7 @@ namespace FirstWebApi.Models
 
             foreach (DataRow data in ds.Tables[0].Rows)
             {
-                p.Add(new Provider()
+                p.Add(new ProviderModel()
                 {
                     ProviderId = Convert.ToInt32(data[0].ToString()),
                     ProviderName = data[1].ToString(),
@@ -82,7 +82,7 @@ namespace FirstWebApi.Models
             return p.FirstOrDefault();
         }
 
-        internal static void InsertProvider(Provider p)
+        internal static void InsertProvider(ProviderModel p)
         {
             SqlConnection conn = new SqlConnection(connectionString);
 
@@ -93,7 +93,7 @@ namespace FirstWebApi.Models
             command.ExecuteNonQuery();
         }
 
-        internal static void UpdateProvider(Provider p)
+        internal static void UpdateProvider(ProviderModel p)
         {
             SqlConnection conn = new SqlConnection(connectionString);
 
