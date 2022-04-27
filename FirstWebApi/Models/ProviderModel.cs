@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using FirstWebApi.DataObject;
-
+using FirstWebApi.Handlers;
 
 namespace FirstWebApi.Models
 {
@@ -29,15 +29,10 @@ namespace FirstWebApi.Models
             //SqlCommand command = new SqlCommand("select * from Provider", conn);
             //SqlDataAdapter adaptor = new SqlDataAdapter(command);
             //DataSet ds = new DataSet();
-
-
             //adaptor.Fill(ds);
-
 
             ProductDatabaseEntities1 entity = new ProductDatabaseEntities1();
             var result = entity.Providers.ToList();
-
-
 
             foreach (var data in result)
             {
@@ -57,61 +52,107 @@ namespace FirstWebApi.Models
 
         public static ProviderModel GetProviderDataByProviderId(int id)
         {
-            List<ProviderModel> p = new List<ProviderModel>();
-            SqlConnection conn = new SqlConnection(connectionString);
+            ProviderModel p = new ProviderModel();
+            //SqlConnection conn = new SqlConnection(connectionString);
 
-            conn.Open();
-            SqlCommand command = new SqlCommand($"select * from Provider where providerid = {id}", conn);
-            SqlDataAdapter adaptor = new SqlDataAdapter(command);
-            DataSet ds = new DataSet();
-            adaptor.Fill(ds);            
+            //conn.Open();
+            //SqlCommand command = new SqlCommand($"select * from Provider where providerid = {id}", conn);
+            //SqlDataAdapter adaptor = new SqlDataAdapter(command);
+            //DataSet ds = new DataSet();
+            //adaptor.Fill(ds);
+            
+            //foreach (DataRow data in ds.Tables[0].Rows)
+            //{
+            //    p.Add(new ProviderModel()
+            //    {
+            //        ProviderId = Convert.ToInt32(data[0].ToString()),
+            //        ProviderName = data[1].ToString(),
+            //        ProviderType = data[2].ToString(),
+            //        Address = data["Address"].ToString(),
+            //        City = data["City"].ToString(),
+            //        State = data["State"].ToString(),
+            //    });
+            //}
 
-            foreach (DataRow data in ds.Tables[0].Rows)
-            {
-                p.Add(new ProviderModel()
-                {
-                    ProviderId = Convert.ToInt32(data[0].ToString()),
-                    ProviderName = data[1].ToString(),
-                    ProviderType = data[2].ToString(),
-                    Address = data["Address"].ToString(),
-                    City = data["City"].ToString(),
-                    State = data["State"].ToString(),
-                });
-            }
+            //return p.FirstOrDefault();
 
-            return p.FirstOrDefault();
+
+            ProductDatabaseEntities1 entity = new ProductDatabaseEntities1();
+            var result = entity.Providers.Where(pr => pr.ProviderId == id).FirstOrDefault();
+
+            var mapper = AutoMapperConfig.AutoMapperConfiguration();
+            mapper.Map(result, p);
+
+            return p;            
         }
 
         internal static void InsertProvider(ProviderModel p)
         {
-            SqlConnection conn = new SqlConnection(connectionString);
+            //SqlConnection conn = new SqlConnection(connectionString);
 
-            string insertCmd = $"insert into Provider (ProviderName, ProviderType, Address, City, State) values " +
-                $"('{p.ProviderName}','{p.ProviderType}','{p.Address}','{p.City}','{p.State}')";
-            conn.Open();
-            SqlCommand command = new SqlCommand(insertCmd, conn);
-            command.ExecuteNonQuery();
+            //string insertCmd = $"insert into Provider (ProviderName, ProviderType, Address, City, State) values " +
+            //    $"('{p.ProviderName}','{p.ProviderType}','{p.Address}','{p.City}','{p.State}')";
+            //conn.Open();
+            //SqlCommand command = new SqlCommand(insertCmd, conn);
+            //command.ExecuteNonQuery();
+
+            Provider newProvider = new Provider();
+            var mapper = AutoMapperConfig.AutoMapperConfiguration();
+            mapper.Map(p, newProvider);
+
+            newProvider = new Provider()
+            {
+                Address = p.Address,
+
+            };
+
+
+            ProductDatabaseEntities1 entity = new ProductDatabaseEntities1();
+            entity.Providers.Add(newProvider);
+            entity.SaveChanges();
         }
 
         internal static void UpdateProvider(ProviderModel p)
         {
-            SqlConnection conn = new SqlConnection(connectionString);
+            //SqlConnection conn = new SqlConnection(connectionString);
 
-            string insertCmd = $"update provider set providertype='{p.ProviderType}', providername='{p.ProviderName}' " +
-                $", Address='{p.Address}', City='{p.City}', State='{p.State}' where providerid={p.ProviderId}";
-            conn.Open();
-            SqlCommand command = new SqlCommand(insertCmd, conn);
-            command.ExecuteNonQuery();
+            //string insertCmd = $"update provider set providertype='{p.ProviderType}', providername='{p.ProviderName}' " +
+            //    $", Address='{p.Address}', City='{p.City}', State='{p.State}' where providerid={p.ProviderId}";
+            //conn.Open();
+            //SqlCommand command = new SqlCommand(insertCmd, conn);
+            //command.ExecuteNonQuery();
+
+            ProductDatabaseEntities1 entity = new ProductDatabaseEntities1();
+            var providerToBeUpdated = entity.Providers.Where(pr => pr.ProviderId == p.ProviderId).FirstOrDefault();
+
+            //var mapper = AutoMapperConfig.AutoMapperConfiguration();
+            //mapper.Map(p, providerToBeUpdated);
+
+            providerToBeUpdated.ProviderName = p.ProviderName;
+            providerToBeUpdated.ProviderType = p.ProviderType;
+            providerToBeUpdated.City = p.City;
+            providerToBeUpdated.Address = p.Address;
+            providerToBeUpdated.State = p.State;
+
+            entity.SaveChanges();
         }
 
         internal static void DeleteProvider(int p)
         {
-            SqlConnection conn = new SqlConnection(connectionString);
+            //SqlConnection conn = new SqlConnection(connectionString);
 
-            string insertCmd = $"Delete provider where providerid={p}";
-            conn.Open();
-            SqlCommand command = new SqlCommand(insertCmd, conn);
-            command.ExecuteNonQuery();
-        }        
+            //string insertCmd = $"Delete provider where providerid={p}";
+            //conn.Open();
+            //SqlCommand command = new SqlCommand(insertCmd, conn);
+            //command.ExecuteNonQuery();
+            
+
+            ProductDatabaseEntities1 entity = new ProductDatabaseEntities1();
+            var providerToBeDeleted = entity.Providers.Where(pr => pr.ProviderId == p).FirstOrDefault();
+            entity.Providers.Remove(providerToBeDeleted);
+            entity.SaveChanges();
+
+
+        }
     }
 }

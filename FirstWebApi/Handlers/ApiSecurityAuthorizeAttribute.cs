@@ -16,10 +16,15 @@ namespace FirstWebApi.Handlers
             var user = HttpContext.Current.User.Identity.Name;
 
             ProductDatabaseEntities2 entity = new ProductDatabaseEntities2();
+            var role = entity.Users.Where(x => x.UserName == user).FirstOrDefault()?.Role;
+            
+            //var role = entity.Users.Where(x => x.UserName == user).FirstOrDefault()?.Role;
 
-            var role = entity.Users.Where(x => x.UserName == user).FirstOrDefault().Role;            
 
-            if (Roles != role)
+            var roles = Roles.Split(',');
+
+
+            if (!Roles.Contains(role))
             {
                 actionContext.Response = new System.Net.Http.HttpResponseMessage
                     (System.Net.HttpStatusCode.Unauthorized);

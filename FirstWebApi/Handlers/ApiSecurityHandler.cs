@@ -17,7 +17,7 @@ namespace FirstWebApi.Handlers
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             var queryString = request.RequestUri.ParseQueryString();
-            if (queryString.Count != 0)
+             if (queryString.Count != 0)
             {
                 var apiKey = queryString["apiKey"].ToString();
 

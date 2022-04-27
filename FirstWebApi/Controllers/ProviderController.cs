@@ -14,14 +14,14 @@ namespace FirstWebApi.Controllers
 {
     public class ProviderController : ApiController
     {
-        [ApiSecurityAuthorize(Roles ="admin")]
+        [ApiSecurityAuthorize(Roles = "user,admin")]
         public List<ProviderModel> GetProviders()
         {
             return ProviderModel.GetProviderData(); 
         }
 
 
-        [ApiSecurityAuthorize(Roles = "user, admin")]
+        [ApiSecurityAuthorize(Roles = "user,admin")]
         public ProviderModel GetProviderById(int id)
         {
             return ProviderModel.GetProviderDataByProviderId(id);
@@ -37,6 +37,7 @@ namespace FirstWebApi.Controllers
 
 
         [HttpPost]
+        [ApiSecurityAuthorize(Roles = "user, admin")]
         public void AddProvider([FromBody] ProviderModel p)
         {
             //var provider = Newtonsoft.Json.JsonConvert.DeserializeObject<Provider>(p.ToString());
@@ -53,12 +54,14 @@ namespace FirstWebApi.Controllers
         //}
 
         [HttpPatch]
+        [ApiSecurityAuthorize(Roles = "admin")]
         public void UpdateProvider([FromBody] ProviderModel P)
         {
             ProviderModel.UpdateProvider(P);
         }
 
         [HttpDelete]
+        [ApiSecurityAuthorize(Roles = "admin")]
         public void UpdateProvider(int id)
         {
             ProviderModel.DeleteProvider(id);
