@@ -24,7 +24,7 @@ namespace FirstWebApi.Handlers
             var roles = Roles.Split(',');
 
 
-            if (!Roles.Contains(role))
+            if (role==null || !Roles.Contains(role))
             {
                 actionContext.Response = new System.Net.Http.HttpResponseMessage
                     (System.Net.HttpStatusCode.Unauthorized);
